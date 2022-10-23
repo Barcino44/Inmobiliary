@@ -44,13 +44,14 @@ public class Main{
 			"2. Add an apartment\n"+
 			"3. Add an owner in a apartment\n" +
 			"4. Add a tenant in a apartment\n" +
+			"5. Show available apartments in a building\n" +
+			"6. Calculate mensual payment in a building\n" +
 			"0.Exit program";  
 	}
 	// this method executes the option
 	public void executeOption(int option){
 			String msj="";
 			String nameBuilding="";
-			int numberOfApartmentsOfBuilding=0;
 			String directionBuilding="";
 			int apartmentNumber=0;
 			int numberOfBedroomsOfApartment=0;
@@ -94,24 +95,17 @@ public class Main{
 							System.out.println("The building already exists");
 						}
 						else{
-						System.out.println("Enter the number of apartments that the building has");
-						while(!reader.hasNextInt()){
-							reader.next();
-							System.out.println("The number of apartments has to be an integer");
-						}
-						numberOfApartmentsOfBuilding=reader.nextInt();
-
 						System.out.println("Enter the direction of the building's direction");
 						directionBuilding=reader.next();
 
-						msj=inmobiliary.addBuilding(nameBuilding,numberOfApartmentsOfBuilding, directionBuilding);
+						msj=inmobiliary.addBuilding(nameBuilding, directionBuilding);
 						System.out.println(msj);
 						}
 					}
 					break;
 					
 				case 2:
-					System.out.println("Enter building's name");
+					System.out.println("Enter building's name where is going to be add the apartment");
 					nameBuilding=reader.next();
 						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
 							System.out.println("The building doesn't exists");
@@ -165,69 +159,69 @@ public class Main{
 				case 3:
 					System.out.println("Enter building's name where you want to add the owner");
 					nameBuilding=reader.next();
-						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
-							System.out.println("The building doesn't exists");
+					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+						System.out.println("The building doesn't exists");
 						}
-						else if(inmobiliary.searchBuildingByName(nameBuilding)!=-1){
+					else if(inmobiliary.searchBuildingByName(nameBuilding)!=-1){
 						System.out.println("Enter the number of apartment where you want to add the owner");
+						while(!reader.hasNextInt()){
+							reader.next();
+							System.out.println("The apartment number has to be an integer");
+						}
+						apartmentNumber=reader.nextInt();
+						if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
+							System.out.println("The apartment doesn't exists");
+						}
+						else if(inmobiliary.validateIfOwnerExist(nameBuilding, apartmentNumber)==true){
+							System.out.println("The apartment has already an owner");
+						}
+						else{
+							System.out.println(validationTypeId);
 							while(!reader.hasNextInt()){
 								reader.next();
-								System.out.println("The apartment number has to be an integer");
-							}
-							apartmentNumber=reader.nextInt();
-							if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
-								System.out.println("The apartment doesn't exists");
-							}
-							else if(inmobiliary.validateIfOwnerExist(nameBuilding, apartmentNumber)==true){
-								System.out.println("The apartment has already an owner");
-							}
-							else{
+								System.out.println("Invalid, please enter an integer");
 								System.out.println(validationTypeId);
-								while(!reader.hasNextInt()){
-									reader.next();
-									System.out.println("Invalid, please enter an integer");
-									System.out.println(validationTypeId);
-								}
-								ownerSelectionTypeId=reader.nextInt();
-
-								while(ownerSelectionTypeId!=1&&ownerSelectionTypeId!=2&&ownerSelectionTypeId!=3){
-									System.out.println("That's not a type of id");
-									System.out.println(validationTypeId);
-									ownerSelectionTypeId=reader.nextInt();
-								}
-
-								System.out.println("Type the owner's number of id");
-								ownerId=reader.next();
-								System.out.println("Type the owner's name");
-								ownerName=reader.next();
-								System.out.println("Type the owner's phone");
-								ownerPhoneNumber=reader.next();
-
-								System.out.println(validationTypePhone);
-								while(!reader.hasNextInt()){
-									reader.next();
-									System.out.println("Invalid, please enter an integer");
-									System.out.println(validationTypePhone);
-								}
-								ownerSelectionTypePhone=reader.nextInt();
-
-								while(ownerSelectionTypePhone!=1&&ownerSelectionTypePhone!=2&&ownerSelectionTypePhone!=3&&ownerSelectionTypePhone!=4&&ownerSelectionTypePhone!=5){
-									System.out.println("That's not a type of phone");
-									System.out.println(validationTypePhone);
-									ownerSelectionTypePhone=reader.nextInt();
-								}
-								System.out.println("Type the owner's number of account");
-								ownerNumberOfAccount=reader.next();
-								System.out.println("Type the owner's name of bank");
-								ownerNameOfBank=reader.next();
-
-								msj=inmobiliary.addOwnerToApartment(nameBuilding, apartmentNumber, ownerSelectionTypeId, ownerId, ownerName, ownerPhoneNumber, ownerSelectionTypePhone, ownerNumberOfAccount, ownerNameOfBank);
-								System.out.println(msj);
 							}
+							ownerSelectionTypeId=reader.nextInt();
+
+							while(ownerSelectionTypeId!=1&&ownerSelectionTypeId!=2&&ownerSelectionTypeId!=3){
+								System.out.println("That's not a type of id");
+								System.out.println(validationTypeId);
+								ownerSelectionTypeId=reader.nextInt();
+							}
+
+							System.out.println("Type the owner's number of id");
+							ownerId=reader.next();
+							System.out.println("Type the owner's name");
+							ownerName=reader.next();
+							System.out.println("Type the owner's phone");
+							ownerPhoneNumber=reader.next();
+
+							System.out.println(validationTypePhone);
+							while(!reader.hasNextInt()){
+								reader.next();
+								System.out.println("Invalid, please enter an integer");
+								System.out.println(validationTypePhone);
+							}
+							ownerSelectionTypePhone=reader.nextInt();
+
+							while(ownerSelectionTypePhone!=1&&ownerSelectionTypePhone!=2&&ownerSelectionTypePhone!=3&&ownerSelectionTypePhone!=4&&ownerSelectionTypePhone!=5){
+								System.out.println("That's not a type of phone");
+								System.out.println(validationTypePhone);
+								ownerSelectionTypePhone=reader.nextInt();
+							}
+							System.out.println("Type the owner's number of account");
+							ownerNumberOfAccount=reader.next();
+							System.out.println("Type the owner's name of bank");
+							ownerNameOfBank=reader.next();
+
+							msj=inmobiliary.addOwnerToApartment(nameBuilding, apartmentNumber, ownerSelectionTypeId, ownerId, ownerName, ownerPhoneNumber, ownerSelectionTypePhone, ownerNumberOfAccount, ownerNameOfBank);
+							System.out.println(msj);
 						}
+					}
 					break;
 				case 4: 
-				System.out.println("Enter building's name where you want to add the tenant");
+					System.out.println("Enter building's name where you want to add the tenant");
 					nameBuilding=reader.next();
 						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
 							System.out.println("The building doesn't exists");
@@ -288,7 +282,30 @@ public class Main{
 							}
 						}
 					break;
-
+				case 5: 
+					System.out.println("All the buildings has 10 available apartments, the number will be decreising every time that a apartment be rented");
+					System.out.println("Enter building's name");
+					nameBuilding=reader.next();
+					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+						System.out.println("The building doesn't exists");
+					}
+					else{
+						msj=inmobiliary.countEmptyApartmentsInBuilding(nameBuilding);
+						System.out.println(msj);
+					}
+					break;
+				case 6:
+					System.out.println("Aclaration!!!");
+					System.out.println("If no one has rented an apartment, the mensual value of the building will be 0");
+					System.out.println("Enter building's name");
+					nameBuilding=reader.next();
+					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+						System.out.println("The building doesn't exists");
+					}
+					else{
+						msj=inmobiliary.calculateMensualGainOfBuilding(nameBuilding);
+						System.out.println(msj);
+					}
 				case 0: 
 					System.out.println("Exit program.");
 					break; 

@@ -2,17 +2,15 @@ package model;
 
 public class Building {
 
-	public static final int APARTMENT_SIZE = 10;
+	public static final int APARTMENT_SIZE = 11;
 
 	private Apartment[] apartments; 
 	private String name;
-	private int numberOfApartments;
 	private String direction;
 
-	public Building(String name, int numberOfApartments, String direction) {
+	public Building(String name, String direction) {
 		apartments = new Apartment[APARTMENT_SIZE];
 		this.name = name;
-		this.numberOfApartments = numberOfApartments;
 		this.direction = direction;
 	}
 	public String getName() {
@@ -20,12 +18,6 @@ public class Building {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getNumberOfApartments() {
-		return numberOfApartments;
-	}
-	public void setTypeEnemy(int numberOfApartments){
-		this.numberOfApartments = numberOfApartments;
 	}
 	public String getDirection() {
 		return direction;
@@ -81,5 +73,27 @@ public class Building {
 		int apartmentPos=searchApartmentByNumber(apartmentNumber);
 		boolean tenantExist=apartments[apartmentPos].validateIfTenantExist();
 		return tenantExist;
+	}
+	public int countEmptyApartments(){
+		int emptyApartments=10; 
+		for(int i=1; i<APARTMENT_SIZE; i++){
+			if(apartments[i]!=null){
+				if(apartments[i].validateIfTenantExist()==true){
+				emptyApartments=emptyApartments-1;
+				}
+			}
+		}
+	return emptyApartments;
+	}
+	public double calculateGain(){
+		double payment=0;
+		for (int i=1;i<APARTMENT_SIZE ;i++) {
+			if(apartments[i]!=null){
+				if(apartments[i].validateIfTenantExist()==true){
+				payment = payment + apartments[i].getMensualValue();
+				}
+			}	
+		}
+	return payment;
 	}
 }
