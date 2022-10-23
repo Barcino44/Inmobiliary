@@ -31,7 +31,7 @@ public class Inmobiliary {
 		}
 		return pos;
 	}
-	public int validateIfBuildingExist(String buildingName){
+	public int searchBuildingByName(String buildingName){
 		int pos=-1;
 		boolean buildingExist=false;
 		for(int i=1; i<BUILDING_SIZE&&!buildingExist; i++){
@@ -44,12 +44,49 @@ public class Inmobiliary {
 		}
 		return pos;
 	}
+	public boolean validateIfApartmentNoExist(String buildingName, int apartmentNumber){
+		boolean apartmentNoExist=false;
+		int posBuilding=searchBuildingByName(buildingName);
+		if(buildings[posBuilding].searchApartmentByNumber(apartmentNumber)==-1){
+			apartmentNoExist=true;
+		}
+	return apartmentNoExist;
+	}
 	public String addApartmentToBuilding(String buildingName, int apartmentNumber, int numberOfBedrooms, int numberOfBathroooms, boolean hasBalcony, double mensualValue){
 		String msj="";
-		int posBuilding=validateIfBuildingExist(buildingName);
+		int posBuilding=searchBuildingByName(buildingName);
 		Apartment newApartment= new Apartment(apartmentNumber, numberOfBedrooms, numberOfBathroooms, hasBalcony, mensualValue);
-		msj=buildings[posBuilding].addApartmentWithObject(newApartment)+buildings[posBuilding].getName();
+		if(buildings[posBuilding].addApartmentWithObject(newApartment)==true){
+			msj="The apartment " + apartmentNumber + " has been added to the building " + buildingName;
+		}
 		return msj;
 	}
-	
+	public boolean validateIfOwnerExist(String buildingName, int apartmentNumber){
+		int posBuilding=searchBuildingByName(buildingName);
+		boolean ownerExist=buildings[posBuilding].validateIfOwnerExist(apartmentNumber);
+		return ownerExist;
+	}
+	public boolean validateIfTenantExist(String buildingName, int apartmentNumber){
+		int posBuilding=searchBuildingByName(buildingName);
+		boolean tenantExist=buildings[posBuilding].validateIfTenantExist(apartmentNumber);
+		return tenantExist;
+	}
+	public String addOwnerToApartment(String buildingName, int apartmentNumber, int selectiontypeId, String numberOfId, String name, String phoneNumber, int selectiontypePhone, String numberOfAccount, String nameOfBank){
+		String msj="";
+		int buildingPos=searchBuildingByName(buildingName);
+		Owner newOwner = new Owner(selectiontypeId, numberOfId, name, phoneNumber, selectiontypePhone, numberOfAccount, nameOfBank);
+		if(buildings[buildingPos].addOwnerToApartment(apartmentNumber,newOwner)==true){
+			msj="Owner added sucefully to the apartment "+apartmentNumber+" in the building "+ buildingName;
+		}
+	return msj;
+	}
+	public String addTenantToApartment(String buildingName, int apartmentNumber, int selectiontypeId, String numberOfId, String name, String phoneNumber, int selectiontypePhone){
+		String msj="";
+		int buildingPos=searchBuildingByName(buildingName);
+		Tenant newTenant = new Tenant(selectiontypeId, numberOfId, name, phoneNumber, selectiontypePhone);
+		if(buildings[buildingPos].addTenantToApartment(apartmentNumber,newTenant)==true){
+			msj="Tenant added sucefully to the apartment "+apartmentNumber+" in the building "+ buildingName;
+		}
+	return msj;
+	}
 }

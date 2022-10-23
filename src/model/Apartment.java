@@ -2,7 +2,7 @@ package model;
 
 public class Apartment {
 
-	public static final int CLIENT_SIZE = 2;
+	public static final int CLIENT_SIZE=3;
 
 	private Client[] clients; 
 	private int number;
@@ -42,5 +42,43 @@ public class Apartment {
 	}
 	public void setMensualValue(double mensualValue){
 		this.mensualValue = mensualValue; 
+	}
+	public boolean addOwnerToApartment(Owner owner){
+		boolean isAdded=false;
+		for(int i=1; i<CLIENT_SIZE; i++){
+			if(clients[1]==null){
+				clients[1]=owner;
+				isAdded=true;
+			}
+		}
+	return isAdded;
+	}
+	public boolean addTenantToApartment(Tenant tenant){
+		boolean isAdded=false;
+		for(int i=1; i<CLIENT_SIZE; i++){
+			if(clients[2]==null){
+				clients[2]=tenant;
+				isAdded=true;
+			}
+		}
+	return isAdded;
+	}
+	public boolean validateIfOwnerExist(){
+		boolean ownerExist=true;
+		for(int i=1; i<CLIENT_SIZE; i++){
+			if(clients[1]==null){
+				ownerExist=false;
+			}
+		}
+	return ownerExist;
+	}
+	public boolean validateIfTenantExist(){
+		boolean tenantExist=true;
+		for(int i=1; i<CLIENT_SIZE; i++){
+			if(clients[2]==null){
+				tenantExist=false;
+			}
+		}
+	return tenantExist;
 	}
 }
