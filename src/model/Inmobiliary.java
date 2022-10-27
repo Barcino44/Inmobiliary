@@ -1,7 +1,7 @@
 package model;
 public class Inmobiliary {
 
-	public static final int BUILDING_SIZE = 5;
+	public static final int BUILDING_SIZE = 6;
 
 	private Building[] buildings; 
 
