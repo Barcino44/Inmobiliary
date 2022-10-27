@@ -5,8 +5,8 @@ public class Owner extends Client{
 	private String numberOfAccount;
 	private String nameOfBank;
 
-	public Owner(int selectiontypeId, String id, String name, String phoneNumber, int selectiontypePhone, String numberOfAccount, String nameOfBank) {
-		super(selectiontypeId, name, id, phoneNumber, selectiontypePhone);
+	public Owner(int selectiontypeId, String numberOfId, String name, String phoneNumber, int selectiontypePhone, String numberOfAccount, String nameOfBank) {
+		super(selectiontypeId, numberOfId, name, phoneNumber, selectiontypePhone);
 		this.numberOfAccount = numberOfAccount;
 		this.nameOfBank=nameOfBank; 
 	}

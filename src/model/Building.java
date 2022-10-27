@@ -64,36 +64,58 @@ public class Building {
 		}
 		return isPossibleToAdd;
 	}
-	public boolean validateIfOwnerExist(int apartmentNumber){
+	public boolean validateIftheApartmentHasAOwner(int apartmentNumber){
 		int apartmentPos=searchApartmentByNumber(apartmentNumber);
-		boolean ownerExist=apartments[apartmentPos].validateIfOwnerExist();
+		boolean ownerExist=apartments[apartmentPos].validateIftheApartmentHasAOwner();
 		return ownerExist;
 	}
-	public boolean validateIfTenantExist(int apartmentNumber){
+	public boolean validateIfTheApartmentHasATennant(int apartmentNumber){
 		int apartmentPos=searchApartmentByNumber(apartmentNumber);
-		boolean tenantExist=apartments[apartmentPos].validateIfTenantExist();
+		boolean tenantExist=apartments[apartmentPos].validateIfTheApartmentHasATennant();
 		return tenantExist;
 	}
 	public int countEmptyApartments(){
 		int emptyApartments=10; 
 		for(int i=1; i<APARTMENT_SIZE; i++){
 			if(apartments[i]!=null){
-				if(apartments[i].validateIfTenantExist()==true){
+				if(apartments[i].validateIfTheApartmentHasATennant()==true){
 				emptyApartments=emptyApartments-1;
 				}
 			}
 		}
 	return emptyApartments;
 	}
-	public double calculateGain(){
+	public double calculateInmobiliaryGain(){
 		double payment=0;
 		for (int i=1;i<APARTMENT_SIZE ;i++) {
 			if(apartments[i]!=null){
-				if(apartments[i].validateIfTenantExist()==true){
+				if(apartments[i].validateIfTheApartmentHasATennant()==true){
 				payment = payment + apartments[i].getMensualValue();
 				}
 			}	
 		}
 	return payment;
+	}
+	public int countApartmentsByOwner(String ownerName){
+		int countApartmentsByOwner=0;
+		for(int i=1; i<APARTMENT_SIZE; i++){
+			if(apartments[i]!=null){
+				if(apartments[i].validateIfOwnerHasTheApartment(ownerName)==true){
+					countApartmentsByOwner=countApartmentsByOwner+1;
+				}
+			}
+		}
+	return countApartmentsByOwner;
+	}
+	public double calculateOwnerGain(String ownerName){
+		double ownerGain=0;
+		for(int i=1; i<APARTMENT_SIZE; i++){
+			if(apartments[i]!=null){
+				if(apartments[i].validateIfOwnerHasTheApartment(ownerName)==true&&apartments[i].validateIfTheApartmentHasATennant()==true){
+					ownerGain=ownerGain+apartments[i].getMensualValue();
+				}		
+			}
+		}
+	return ownerGain;
 	}
 }

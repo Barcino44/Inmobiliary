@@ -1,7 +1,7 @@
 package model;
 public class Inmobiliary {
 
-	public static final int BUILDING_SIZE = 6;
+	public static final int BUILDING_SIZE = 5;
 
 	private Building[] buildings; 
 
@@ -67,15 +67,15 @@ public class Inmobiliary {
 		return msj;
 	}
 
-	public boolean validateIfOwnerExist(String buildingName, int apartmentNumber){
+	public boolean validateIftheApartmentHasAOwner(String buildingName, int apartmentNumber){
 		int posBuilding=searchBuildingByName(buildingName);
-		boolean ownerExist=buildings[posBuilding].validateIfOwnerExist(apartmentNumber);
+		boolean ownerExist=buildings[posBuilding].validateIftheApartmentHasAOwner(apartmentNumber);
 		return ownerExist;
 	}
 
-	public boolean validateIfTenantExist(String buildingName, int apartmentNumber){
+	public boolean validateIfTheApartmentHasATennant(String buildingName, int apartmentNumber){
 		int posBuilding=searchBuildingByName(buildingName);
-		boolean tenantExist=buildings[posBuilding].validateIfTenantExist(apartmentNumber);
+		boolean tenantExist=buildings[posBuilding].validateIfTheApartmentHasATennant(apartmentNumber);
 		return tenantExist;
 	}
 
@@ -84,7 +84,7 @@ public class Inmobiliary {
 		int buildingPos=searchBuildingByName(buildingName);
 		Owner newOwner = new Owner(selectiontypeId, numberOfId, name, phoneNumber, selectiontypePhone, numberOfAccount, nameOfBank);
 		if(buildings[buildingPos].addOwnerToApartment(apartmentNumber,newOwner)==true){
-			msj="Owner added sucefully to the apartment "+apartmentNumber+" in the building "+ buildingName;
+			msj="The owner " + name + " added sucefully to the apartment "+apartmentNumber+" in the building "+ buildingName;
 		}
 	return msj;
 	}
@@ -96,7 +96,7 @@ public class Inmobiliary {
 		if(buildings[buildingPos].addTenantToApartment(apartmentNumber,newTenant)==true){
 			msj="Tenant added sucefully to the apartment "+apartmentNumber+" in the building "+ buildingName;
 		}
-	return msj;
+		return msj;
 	}
 
 	public String countEmptyApartmentsInBuilding(String buildingName){
@@ -109,8 +109,42 @@ public class Inmobiliary {
 	public String calculateMensualGainOfBuilding(String buildingName){
 		String msj="";
 		int posBuilding=searchBuildingByName(buildingName);
-		double totalPaying = buildings[posBuilding].calculateGain();
+		double totalPaying = buildings[posBuilding].calculateInmobiliaryGain();
 		msj="The mensual value that the inmobiliary will recieve by the apartments of the building " + buildingName + " is " + totalPaying;
+		return msj;
+	}
+	public String countApartmentsByOwnerName(String ownerName){
+		int count=0;
+		String msj="";
+		for(int i=1; i<BUILDING_SIZE; i++){
+			if(buildings[i]!=null){
+				count=count+buildings[i].countApartmentsByOwner(ownerName);
+				if(count==0){
+					msj="The owner "+ ownerName+ " hasn't been registered yet";
+				}
+				else{
+					msj="The quantity of apartments that the owner " + ownerName + " has are: " + count;
+				}
+			}
+		}
+	return msj;
+	}
+	public String calculateOwnerGain(String ownerName){
+		String msj="";
+		double totalOwnerGain=0;
+		double inmobiliaryGain=0;
+		for(int i=1; i<BUILDING_SIZE; i++){
+			if(buildings[i]!=null){
+				totalOwnerGain=totalOwnerGain+buildings[i].calculateOwnerGain(ownerName);
+				if(totalOwnerGain!=0){
+					msj="The total gain that the owner "+ownerName+ " will recieve by his/her apartments is " + totalOwnerGain*0.9+ "\n" +
+						"The total gain of the inmobiliary will recieve for the administration of the apartments of the owner " +ownerName+ " is " + totalOwnerGain*0.1; 
+				}
+				else{
+					msj="The owner "+ownerName+ " doesn't exist or his/her apartment(s) doesn't have any tenant";
+				}
+			}
+		}
 		return msj;
 	}
 }

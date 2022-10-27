@@ -2,21 +2,21 @@ package model;
 
 public abstract class Client {
 	private int selectiontypeId;
-	private TypeId typeId;
 	private String numberOfId;
 	private String name;
 	private String phoneNumber;
 	private int selectiontypePhone;
 	private TypePhone typePhone;
-
+	private TypeId typeId;
+	
 	public Client(int selectiontypeId, String numberOfId, String name, String phoneNumber, int selectiontypePhone){
 		this.selectiontypeId = selectiontypeId;
-		setTypeId();
 		this.numberOfId=numberOfId;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.selectiontypePhone = selectiontypePhone;
 		setTypePhone();
+		setTypeId();
 	}
 
 	public void setTypeId(){

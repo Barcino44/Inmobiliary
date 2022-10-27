@@ -46,7 +46,10 @@ public class Main{
 			"4. Add a tenant in a apartment\n" +
 			"5. Show available apartments in a building\n" +
 			"6. Calculate mensual payment in a building\n" +
-			"0.Exit program";  
+			"7. Search if an apartment is available\n" +
+			"8. Search the quantity of apartments rented by an owner\n" +
+			"9. Calculate the gain of an owner by his/her apartments rented and the gain of the inmobiliary by administrate that apartments\n"+
+			"0. Exit program";  
 	}
 	// this method executes the option
 	public void executeOption(int option){
@@ -139,7 +142,7 @@ public class Main{
 												   validationBoolean);
 								while(!reader.hasNextBoolean()){
 									reader.next();
-									System.out.println("the input has to be an boolean");
+									System.out.println("The input has to be an boolean");
 									System.out.println(validationBoolean);
 								}
 								hasBalcony=reader.hasNextBoolean(); reader.next();
@@ -172,7 +175,7 @@ public class Main{
 						if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
 							System.out.println("The apartment doesn't exists");
 						}
-						else if(inmobiliary.validateIfOwnerExist(nameBuilding, apartmentNumber)==true){
+						else if(inmobiliary.validateIftheApartmentHasAOwner(nameBuilding, apartmentNumber)==true){
 							System.out.println("The apartment has already an owner");
 						}
 						else{
@@ -236,10 +239,10 @@ public class Main{
 							if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
 								System.out.println("The apartment doesn't exists");
 							}
-							else if(inmobiliary.validateIfOwnerExist(nameBuilding, apartmentNumber)==false){
+							else if(inmobiliary.validateIftheApartmentHasAOwner(nameBuilding, apartmentNumber)==false){
 								System.out.println("Before to add a tenant you have to add the owner");
 							}
-							else if(inmobiliary.validateIfTenantExist(nameBuilding, apartmentNumber)==true){
+							else if(inmobiliary.validateIfTheApartmentHasATennant(nameBuilding, apartmentNumber)==true){
 								System.out.println("The apartment has already a tenant");
 							}
 							else{
@@ -286,7 +289,7 @@ public class Main{
 					System.out.println("All the buildings has 10 available apartments, the number will be decreising every time that a apartment be rented");
 					System.out.println("Enter building's name");
 					nameBuilding=reader.next();
-					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
 						System.out.println("The building doesn't exists");
 					}
 					else{
@@ -296,7 +299,7 @@ public class Main{
 					break;
 				case 6:
 					System.out.println("Aclaration!!!");
-					System.out.println("If no one has rented an apartment, the mensual value of the building will be 0");
+					System.out.println("If no one has rented an apartment, the mensual value of the building will be 0.0\n");
 					System.out.println("Enter building's name");
 					nameBuilding=reader.next();
 					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
@@ -306,6 +309,46 @@ public class Main{
 						msj=inmobiliary.calculateMensualGainOfBuilding(nameBuilding);
 						System.out.println(msj);
 					}
+					break;
+				case 7:
+					System.out.println("Remember an apartment just will be available if it has an owner and it doesn't have a tenant\n");
+					System.out.println("Type the building where you want to search the apartment");
+					nameBuilding=reader.next();
+						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+							System.out.println("The building doesn't exists");
+						}
+						else if(inmobiliary.searchBuildingByName(nameBuilding)!=-1){
+						System.out.println("Enter the number of apartment which you want to validate if it is available");
+							while(!reader.hasNextInt()){
+								reader.next();
+								System.out.println("The apartment number has to be an integer");
+							}
+							apartmentNumber=reader.nextInt();
+							if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
+								System.out.println("The apartment doesn't exist");
+							}
+							else{
+								if(inmobiliary.validateIfTheApartmentHasATennant(nameBuilding,apartmentNumber)==false&&inmobiliary.validateIftheApartmentHasAOwner(nameBuilding, apartmentNumber)==true){
+									System.out.println("The apartment is available");
+								}
+								else{
+									System.out.println("The apartment is not available");
+								}
+							}
+						}
+					break;
+				case 8:
+				 	System.out.println("Enter the owner's name to search the information");
+				 	ownerName=reader.next();
+				 	msj=inmobiliary.countApartmentsByOwnerName(ownerName);
+				 	System.out.println(msj);
+				 	break;
+				case 9:
+					System.out.println("Enter the owner's name to search the information");
+				 	ownerName=reader.next();
+				 	msj=inmobiliary.calculateOwnerGain(ownerName);
+				 	System.out.println(msj);
+				 	break;
 				case 0: 
 					System.out.println("Exit program.");
 					break; 

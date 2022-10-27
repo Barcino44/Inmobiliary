@@ -63,7 +63,7 @@ public class Apartment {
 		}
 	return isAdded;
 	}
-	public boolean validateIfOwnerExist(){
+	public boolean validateIftheApartmentHasAOwner(){
 		boolean ownerExist=true;
 		for(int i=1; i<CLIENT_SIZE; i++){
 			if(clients[1]==null){
@@ -72,7 +72,7 @@ public class Apartment {
 		}
 	return ownerExist;
 	}
-	public boolean validateIfTenantExist(){
+	public boolean validateIfTheApartmentHasATennant(){
 		boolean tenantExist=true;
 		for(int i=1; i<CLIENT_SIZE; i++){
 			if(clients[2]==null){
@@ -80,5 +80,16 @@ public class Apartment {
 			}
 		}
 	return tenantExist;
+	}
+	public boolean validateIfOwnerHasTheApartment(String ownerName){
+		boolean ownerHasTheApartment=false;
+		for(int i=1; i<CLIENT_SIZE;i++){
+			if(clients[i]!=null){
+				if(clients[1].getName().equals(ownerName)){
+					ownerHasTheApartment=true;
+				}
+			}
+		}
+	return ownerHasTheApartment;
 	}
 }
