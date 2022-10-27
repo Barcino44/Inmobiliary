@@ -110,54 +110,54 @@ public class Main{
 				case 2:
 					System.out.println("Enter building's name where is going to be add the apartment");
 					nameBuilding=reader.next();
-						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
-							System.out.println("The building doesn't exists");
+					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+						System.out.println("The building doesn't exists");
+					}
+					else{
+						System.out.println("Enter the number of apartment that you want to add");
+						while(!reader.hasNextInt()){
+							reader.next();
+							System.out.println("The apartment number has to be an integer");
+						}
+						apartmentNumber=reader.nextInt();
+						if(inmobiliary.validateIfApartmentNoExist(nameBuilding, apartmentNumber)!=true){
+							System.out.println("The apartment already exists");
 						}
 						else{
-							System.out.println("Enter the number of apartment that you want to add");
+							System.out.println("Enter the number of bedrooms that the apartment has");
 							while(!reader.hasNextInt()){
 								reader.next();
-								System.out.println("The apartment number has to be an integer");
+								System.out.println("The number of bedrooms has to be an integer");
 							}
-							apartmentNumber=reader.nextInt();
-							if(inmobiliary.validateIfApartmentNoExist(nameBuilding, apartmentNumber)!=true){
-								System.out.println("The apartment already exists");
+							numberOfBedroomsOfApartment=reader.nextInt();
+
+							System.out.println("Enter the number of bathrooms that the apartment has");
+							while(!reader.hasNextInt()){
+								reader.next();
+								System.out.println("The number of bathrooms has to be an integer");
 							}
-							else{
-								System.out.println("Enter the number of bedrooms that the apartment has");
-								while(!reader.hasNextInt()){
-									reader.next();
-									System.out.println("The number of bedrooms has to be an integer");
-								}
-								numberOfBedroomsOfApartment=reader.nextInt();
+							numberOfBathroomsOfApartment=reader.nextInt();
 
-								System.out.println("Enter the number of bathrooms that the apartment has");
-								while(!reader.hasNextInt()){
-									reader.next();
-									System.out.println("The number of bathrooms has to be an integer");
-								}
-								numberOfBathroomsOfApartment=reader.nextInt();
-
-								System.out.println("The apartment has Balcony?\n"+
-												   validationBoolean);
-								while(!reader.hasNextBoolean()){
-									reader.next();
-									System.out.println("The input has to be an boolean");
-									System.out.println(validationBoolean);
-								}
-								hasBalcony=reader.hasNextBoolean(); reader.next();
-
-								System.out.println("What is the mensual value of the apartment");
-								while(!reader.hasNextDouble()){
-									reader.next();
-									System.out.println("The value has to be a double");
-								}
-								mensualValue=reader.nextInt();
-
-								msj=inmobiliary.addApartmentToBuilding(nameBuilding, apartmentNumber, numberOfBedroomsOfApartment, numberOfBathroomsOfApartment, hasBalcony, mensualValue);
-								System.out.println(msj);	
+							System.out.println("The apartment has Balcony?\n"+
+											   validationBoolean);
+							while(!reader.hasNextBoolean()){
+								reader.next();
+								System.out.println("The input has to be an boolean");
+								System.out.println(validationBoolean);
 							}
+							hasBalcony=reader.hasNextBoolean(); reader.next();
+
+							System.out.println("What is the mensual value of the apartment");
+							while(!reader.hasNextDouble()){
+								reader.next();
+								System.out.println("The value has to be a double");
+							}
+							mensualValue=reader.nextInt();
+
+							msj=inmobiliary.addApartmentToBuilding(nameBuilding, apartmentNumber, numberOfBedroomsOfApartment, numberOfBathroomsOfApartment, hasBalcony, mensualValue);
+							System.out.println(msj);	
 						}
+					}
 					break;
 				case 3:
 					System.out.println("Enter building's name where you want to add the owner");
@@ -226,64 +226,64 @@ public class Main{
 				case 4: 
 					System.out.println("Enter building's name where you want to add the tenant");
 					nameBuilding=reader.next();
-						if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
-							System.out.println("The building doesn't exists");
+					if(inmobiliary.searchBuildingByName(nameBuilding)==-1){
+						System.out.println("The building doesn't exists");
+					}
+					else if(inmobiliary.searchBuildingByName(nameBuilding)!=-1){
+					System.out.println("Enter the number of apartment where you want to add the tenant");
+						while(!reader.hasNextInt()){
+							reader.next();
+							System.out.println("The apartment number has to be an integer");
 						}
-						else if(inmobiliary.searchBuildingByName(nameBuilding)!=-1){
-						System.out.println("Enter the number of apartment where you want to add the tenant");
+						apartmentNumber=reader.nextInt();
+						if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
+							System.out.println("The apartment doesn't exists");
+						}
+						else if(inmobiliary.validateIftheApartmentHasAOwner(nameBuilding, apartmentNumber)==false){
+							System.out.println("Before to add a tenant you have to add the owner");
+						}
+						else if(inmobiliary.validateIfTheApartmentHasATennant(nameBuilding, apartmentNumber)==true){
+							System.out.println("The apartment has already a tenant");
+						}
+						else{
+							System.out.println(validationTypeId);
 							while(!reader.hasNextInt()){
 								reader.next();
-								System.out.println("The apartment number has to be an integer");
-							}
-							apartmentNumber=reader.nextInt();
-							if(inmobiliary.validateIfApartmentNoExist(nameBuilding,apartmentNumber)==true){
-								System.out.println("The apartment doesn't exists");
-							}
-							else if(inmobiliary.validateIftheApartmentHasAOwner(nameBuilding, apartmentNumber)==false){
-								System.out.println("Before to add a tenant you have to add the owner");
-							}
-							else if(inmobiliary.validateIfTheApartmentHasATennant(nameBuilding, apartmentNumber)==true){
-								System.out.println("The apartment has already a tenant");
-							}
-							else{
+								System.out.println("Invalid, please enter an integer");
 								System.out.println(validationTypeId);
-								while(!reader.hasNextInt()){
-									reader.next();
-									System.out.println("Invalid, please enter an integer");
-									System.out.println(validationTypeId);
-								}
-								tenantSelectionTypeId=reader.nextInt();
-
-								while(tenantSelectionTypeId!=1&&tenantSelectionTypeId!=2&&tenantSelectionTypeId!=3){
-									System.out.println("That's not a type of id");
-									System.out.println(validationTypeId);
-									tenantSelectionTypeId=reader.nextInt();
-								}
-
-								System.out.println("Type the tenant's number of id");
-								tenantId=reader.next();
-								System.out.println("Type the tenant's name");
-								tenantName=reader.next();
-								System.out.println("Type the tenant's phone");
-								tenantPhoneNumber=reader.next();
-
-								System.out.println(validationTypePhone);
-								while(!reader.hasNextInt()){
-									reader.next();
-									System.out.println("Invalid, please enter an integer");
-									System.out.println(validationTypePhone);
-								}
-								tenantSelectionTypePhone=reader.nextInt();
-
-								while(tenantSelectionTypePhone!=1&&tenantSelectionTypePhone!=2&&tenantSelectionTypePhone!=3&&tenantSelectionTypePhone!=4&&tenantSelectionTypePhone!=5){
-									System.out.println("That's not a type of phone");
-									System.out.println(validationTypePhone);
-									tenantSelectionTypePhone=reader.nextInt();
-								}
-								msj=inmobiliary.addTenantToApartment(nameBuilding, apartmentNumber, tenantSelectionTypeId, tenantId, tenantName, tenantPhoneNumber, tenantSelectionTypePhone);
-								System.out.println(msj);
 							}
+							tenantSelectionTypeId=reader.nextInt();
+
+							while(tenantSelectionTypeId!=1&&tenantSelectionTypeId!=2&&tenantSelectionTypeId!=3){
+								System.out.println("That's not a type of id");
+								System.out.println(validationTypeId);
+								tenantSelectionTypeId=reader.nextInt();
+							}
+
+							System.out.println("Type the tenant's number of id");
+							tenantId=reader.next();
+							System.out.println("Type the tenant's name");
+							tenantName=reader.next();
+							System.out.println("Type the tenant's phone");
+							tenantPhoneNumber=reader.next();
+
+							System.out.println(validationTypePhone);
+							while(!reader.hasNextInt()){
+								reader.next();
+								System.out.println("Invalid, please enter an integer");
+								System.out.println(validationTypePhone);
+							}
+							tenantSelectionTypePhone=reader.nextInt();
+
+							while(tenantSelectionTypePhone!=1&&tenantSelectionTypePhone!=2&&tenantSelectionTypePhone!=3&&tenantSelectionTypePhone!=4&&tenantSelectionTypePhone!=5){
+								System.out.println("That's not a type of phone");
+								System.out.println(validationTypePhone);
+								tenantSelectionTypePhone=reader.nextInt();
+							}
+							msj=inmobiliary.addTenantToApartment(nameBuilding, apartmentNumber, tenantSelectionTypeId, tenantId, tenantName, tenantPhoneNumber, tenantSelectionTypePhone);
+							System.out.println(msj);
 						}
+					}
 					break;
 				case 5: 
 					System.out.println("All the buildings has 10 available apartments, the number will be decreising every time that a apartment be rented");
